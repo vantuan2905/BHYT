@@ -8,4 +8,6 @@ import jpa.io.repositories.UserRepository;
 public interface UserService{
 	User saveUser(User u) ;
 	List<User> getListUser();
+	User getUserById(int id);
+	User getUserByMaBaoHiem(int ma);
 }

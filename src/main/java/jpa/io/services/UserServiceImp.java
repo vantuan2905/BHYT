@@ -21,14 +21,21 @@ public class UserServiceImp implements UserService{
 
         // Generate a random 9-digit number
         long nineDigitNumber = 100_000_000L + random.nextInt(900_000_000);
-
-		u.setUserId(u.getMabh());
-		u.setPassword(String.valueOf(nineDigitNumber));
+        u.setUsername(u.getCccd());
+		u.setPassword("12345");
 		return userRepo.save(u);
 	}
 	@Override
 	public List<User> getListUser() {
 		return userRepo.findAll();
+	}
+	public User getUserById(int id) {
+		return userRepo.findById(id).get();
+	}
+	@Override
+	public User getUserByMaBaoHiem(int ma) {
+		// TODO Auto-generated method stub
+		return userRepo.findByMabh(ma);
 	}
 	
 	
