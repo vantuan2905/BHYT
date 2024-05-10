@@ -19,7 +19,7 @@ import lombok.Setter;
 public class HoaDon {
 	@Id
 	@Column(name = "ID")
-	@GeneratedValue(strategy = GenerationType.IDENTITY)
+	
     private int MaHoaDon;
 	
 	@Column(name = "NgayTao")

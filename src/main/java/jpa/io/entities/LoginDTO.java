@@ -15,8 +15,8 @@ import lombok.Setter;
 @Table(name = "login")
 public class LoginDTO {
 	 	@Id
-	    @Column(name = "MABH")
-	    private String mabh;
+	    @Column(name = "USERNAME")
+	    private String username;
 	 	 @Column(name = "PASSWORD")
 		    private String password;
 	    

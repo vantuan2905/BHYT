@@ -16,4 +16,7 @@ public class CongTyBaoHiemService {
 	public CongTyBaoHiem getCongTyBaoHiem(String id) {
 		return r.findById(id).get();
 	}
+	public CongTyBaoHiem getCongTyBaoHiemByDiaChi(String tinh,String huyen,String xa) {
+		return r.findByTinhAndHuyenAndXa(tinh, huyen, xa);
+	}
 }

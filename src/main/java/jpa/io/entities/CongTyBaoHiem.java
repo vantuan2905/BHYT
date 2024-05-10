@@ -25,8 +25,12 @@ public class CongTyBaoHiem {
 	@Column(name = "TenCongTy")
 	private String TenCongTy;
 	
-	@Column(name = "DiaChi")
-	private String DiaChi;
+	@Column(name = "Tinh")
+	private String tinh;
+	@Column(name = "Huyen")
+	private String huyen;
+	@Column(name = "Xa")
+	private String xa;
 	
 	@Column(name = "SDT")
 	private String sdt;

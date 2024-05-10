@@ -1,5 +1,7 @@
 package jpa.io.services;
 
+import java.util.List;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -14,7 +16,9 @@ public class NoiDangKiService {
 		r.save(n);
 	}
 	public NoiDangKy findBenhVien(String huyen) {
-		return r.findByHuyen(huyen);
+		List<NoiDangKy> ds=r.findByHuyen(huyen);
+		for(NoiDangKy i:ds) if(i.getMaSoNoiDangKi().contains("BV")) return i;
+		return new NoiDangKy();
 	}
 	public NoiDangKy findTYT(String tinh,String huyen,String xa) {
 //		return r.findByHuyen(huyen);

@@ -92,9 +92,114 @@ public class Controller {
         c1.setCongTyBaoHiemId("may");
         c1.setDanhSachHoaDon(ds3);
         congTyBaoHiemService.save(c1);
-        
-       
+        NoiDangKy noiKCB=noiDangKiService.findBenhVien("Gia Loc");
+        ArrayList<BaoHiem> ds1=(ArrayList<BaoHiem>) noiKCB.getDanhSachBaoHiem();
+        System.out.println(ds1.size());
         return ResponseEntity.ok(allUser);
+    }
+	@GetMapping("/insertdb")
+    public int insertdata() {
+		User u1=new User();
+		u1.setTen("Thanh");
+		u1.setCccd("020014238654");
+		u1.setEmail("hoangthanh@gmail.com");
+		u1.setSdt("0563049675");
+		u1.setDiaChi("Phuong Hung - Gia Loc - Hai Duong");
+		
+		User u2=new User();
+		u2.setTen("Lien");
+		u2.setCccd("030202111222");
+		u2.setEmail("lienvu@gmail.com");
+		u2.setSdt("0563049675");
+		u2.setDiaChi("Khuong Thuong - Dong Da - Ha Noi");
+		
+		BaoHiem b1=new BaoHiem();
+		u1.setMabh(1);
+		b1.setUser(u1);
+		baoHiemService.save(b1);
+		
+		BaoHiem b2=new BaoHiem();
+		u2.setMabh(2);
+		b2.setUser(u2);
+		baoHiemService.save(b2);
+		
+		LoaiHinhBaoHiem l1=new LoaiHinhBaoHiem();
+		l1.setMaLoai("CB");
+		l1.setBoiThuong(0);
+		l1.setMoTa("");
+		l1.setPhanTramPhi(30);
+		l1.setTenLoai("Co Ban");
+		ArrayList<BaoHiem> ds1=new ArrayList<>();
+        ds1.add(b1);
+        l1.setDanhSachBaoHiem(ds1);
+        loaiHinhBaoHiemService.save(l1);
+        
+		LoaiHinhBaoHiem l2=new LoaiHinhBaoHiem();
+		l2.setMaLoai("PM");
+		l2.setBoiThuong(0);
+		l2.setMoTa("");
+		l2.setPhanTramPhi(30);
+		l2.setTenLoai("Phong Mach");
+		
+		ArrayList<BaoHiem> ds2=new ArrayList<>();
+        ds2.add(b2);
+        l2.setDanhSachBaoHiem(ds2);
+        loaiHinhBaoHiemService.save(l2);
+        
+        NoiDangKy n1=new NoiDangKy();
+        n1.setMaSoNoiDangKi("BV001");
+        n1.setTen("Benh vien huyen Gia Loc");
+        n1.setTinh("Hai Duong");
+        n1.setHuyen("Gia Loc");
+        n1.setXa("Thi tran Gia Loc");
+        ArrayList<BaoHiem> ds3=new ArrayList<>();
+        ds3.add(b1);
+        n1.setDanhSachBaoHiem(ds3);
+        noiDangKiService.save(n1);
+        
+        NoiDangKy n3=new NoiDangKy();
+        n3.setMaSoNoiDangKi("TYT001");
+        n3.setTen("Tram y te xa Le Loi");
+        n3.setTinh("Hai Duong");
+        n3.setHuyen("Gia Loc");
+        n3.setXa("Le Loi");
+        noiDangKiService.save(n3);
+        
+        NoiDangKy n2=new NoiDangKy();
+        n2.setMaSoNoiDangKi("BV002");
+        n2.setTen("Benh vien quan Dong Da");
+        n2.setTinh("Ha Noi");
+        n2.setHuyen("Dong Da");
+        n2.setXa("Tay Son");
+        noiDangKiService.save(n2);
+        NoiDangKy n4=new NoiDangKy();
+        n4.setMaSoNoiDangKi("TYT002");
+        n4.setTen("Tram y te phuong Khuong Thuong");
+        n4.setTinh("Ha Noi");
+        n4.setHuyen("Dong Da");
+        n4.setXa("Khuong Thuong");
+        ArrayList<BaoHiem> ds4=new ArrayList<>();
+        ds4.add(b2);
+        n4.setDanhSachBaoHiem(ds4);
+        noiDangKiService.save(n4);
+        
+        CongTyBaoHiem cty1=new CongTyBaoHiem();
+        cty1.setCongTyBaoHiemId("BH0");
+        cty1.setTenCongTy("Bao Hiem Gia Loc");
+        cty1.setSdt("0974200530");
+        cty1.setTinh("Hai Duong");
+        cty1.setHuyen("Gia Loc");
+        cty1.setXa("Le Loi");
+        congTyBaoHiemService.save(cty1);
+        CongTyBaoHiem cty2=new CongTyBaoHiem();
+        cty2.setCongTyBaoHiemId("BH1");
+        cty2.setTenCongTy("Bao Hiem Dong Da");
+        cty2.setSdt("0974200530");
+        cty2.setTinh("Ha Noi");
+        cty2.setHuyen("Dong Da");
+        cty2.setXa("Khuong Thuong");
+        congTyBaoHiemService.save(cty2);
+    	return 1;
     }
 	 //all user get
     @GetMapping
@@ -116,13 +221,13 @@ public class Controller {
     }
     //check login
     @GetMapping("/check_log")
-    public ResponseEntity<User> check_log(@RequestBody LoginDTO login) {
+    public int check_log(@RequestBody LoginDTO login) {
     	List<User> allUser = userService.getListUser();
     	for(User i:allUser) {
-    		System.out.println(i.getMabh()+"  "+i.getPassword()+"  "+login.getMabh()+ " "+login.getPassword());
-    		if(i.getCccd().equals(login.getMabh())&&i.getPassword().equals(login.getPassword())) return ResponseEntity.ok(i);
+    		System.out.println(i.getCccd()+"  "+i.getPassword()+"  "+login.getUsername()+ " "+login.getPassword());
+    		if(i.getCccd().equals(login.getUsername())&&i.getPassword().equals(login.getPassword())) return i.getUserId();
     	}
-    	return null;
+    	return 0;
     }
     //khai báo
     @PutMapping("/{userId}")
@@ -131,9 +236,9 @@ public class Controller {
          return ResponseEntity.status(HttpStatus.CREATED).body(user1);
     }
     
-    @GetMapping("/tinh/{userId}")
-    public ResponseEntity<HoaDon> tinh(@PathVariable String username,@RequestParam int MaBaoHiem,@RequestParam String DoiTuong,@RequestParam String tinh,@RequestParam String huyen,@RequestParam String xa,@RequestParam int SoThang,@RequestParam String NoiKham,@RequestParam String LoaiBaoHiem){
-    	CongTyBaoHiem cty=congTyBaoHiemService.getCongTyBaoHiem(username);
+    @GetMapping("/tinh")
+    public ResponseEntity<HoaDon> tinh(@RequestParam int MaBaoHiem,@RequestParam String DoiTuong,@RequestParam String tinh,@RequestParam String huyen,@RequestParam String xa,@RequestParam int SoThang,@RequestParam String NoiKham,@RequestParam String LoaiBaoHiem){
+    	CongTyBaoHiem cty=congTyBaoHiemService.getCongTyBaoHiemByDiaChi(tinh, huyen, xa);
     	long fee=0,MucThuNhap=4500000;float heso=1;
     	User user=userService.getUserByMaBaoHiem(MaBaoHiem);
     	if(DoiTuong.equals("Sinh Vien")) { heso=0.7f;MucThuNhap=1500000;}
@@ -170,9 +275,10 @@ public class Controller {
         String end = nextYear.format(formatter);
         bh.setBatDau(start);bh.setKetThuc(end);
         bh.setUser(user);
-        
+        System.out.println(noiKCB.getHuyen()+" "+noiKCB.getMaSoNoiDangKi() );
         int ck1=0;
-        ArrayList<BaoHiem> ds1=(ArrayList<BaoHiem>) noiKCB.getDanhSachBaoHiem();
+        List<BaoHiem> ds1= noiKCB.getDanhSachBaoHiem();
+        System.out.println(ds1.size());
         for(int i=0;i<ds1.size();i++) {
         	if(ds1.get(i).getMaBaoHiem()==bh.getMaBaoHiem()) {
         		ds1.set(i, bh);ck1=1;
@@ -181,25 +287,30 @@ public class Controller {
         if(ck1==0) ds1.add(bh);
         
         int ck2=0;
-        ArrayList<BaoHiem> ds2=(ArrayList<BaoHiem>) loaiBH.getDanhSachBaoHiem();
-        for(int i=0;i<ds1.size();i++) {
+        List<BaoHiem> ds2=loaiBH.getDanhSachBaoHiem();
+        for(int i=0;i<ds2.size();i++) {
         	if(ds2.get(i).getMaBaoHiem()==bh.getMaBaoHiem()) {
         		ds2.set(i, bh);ck1=1;
         	}
         }
         if(ck2==0) ds2.add(bh);
         
-        fee=(long) (0.045*heso*MucThuNhap*HeSoLoaiBaoHiem*k);
+        fee=(long) (0.045*heso*MucThuNhap*HeSoLoaiBaoHiem*k*SoThang);
         
-        HoaDon hd=new HoaDon();
+        HoaDon hd=new HoaDon();hd.setMaHoaDon(20);
         hd.setNgayTao(start);
-        hd.setTongTien((long) (0.045*MucThuNhap*HeSoLoaiBaoHiem*k));
+        hd.setTongTien((long) (0.045*MucThuNhap*HeSoLoaiBaoHiem*k*SoThang));
         hd.setBaoHiem(bh);
-        hd.setHoTro((long) ((1-heso)*0.045*heso*MucThuNhap*HeSoLoaiBaoHiem*k));
+        hd.setHoTro((long) ((1-heso)*0.045*heso*MucThuNhap*HeSoLoaiBaoHiem*k*SoThang));
         hd.setTienNop(fee);
-        ArrayList<HoaDon> ds=(ArrayList<HoaDon>)cty.getDanhSachHoaDon();
+        List<HoaDon> ds=cty.getDanhSachHoaDon();
         ds.add(hd);
+        hd.setMaHoaDon(ds.size()+1);
+        cty.setDanhSachHoaDon(new ArrayList<>());
         cty.setDanhSachHoaDon(ds);
+        
+        congTyBaoHiemService.save(cty);
+    	System.out.println("ok"+" "  +hd.getTienNop()+" "+hd.getMaHoaDon()  );
         return ResponseEntity.ok(hd);
     	
     }
