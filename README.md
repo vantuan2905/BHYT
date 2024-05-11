@@ -5,3 +5,6 @@
 
 - đăng kí:
   ![image](https://github.com/vantuan2905/BHYT/assets/99082087/cf68c6b4-d8ff-4cf4-aa78-ab7766c0c3b4)
+
+- check log:
+  ![image](https://github.com/vantuan2905/BHYT/assets/99082087/f486f146-7b03-4dce-8253-3d8144ab0cf7)
