@@ -23,7 +23,7 @@ import jpa.io.entities.HoaDon;
 import jpa.io.entities.LoaiHinhBaoHiem;
 import jpa.io.entities.LoginDTO;
 import jpa.io.entities.NoiDangKy;
-import jpa.io.entities.User;
+import jpa.io.entities.Users;
 import jpa.io.services.BaoHiemService;
 import jpa.io.services.CongTyBaoHiemService;
 import jpa.io.services.LoaiHinhBaoHiemService;
@@ -48,14 +48,14 @@ public class Controller {
 	@Autowired
 	CongTyBaoHiemService congTyBaoHiemService;
 	@GetMapping("/test")
-    public ResponseEntity<List<User>> getAllUser2() {
-    	User u=new User();
+    public ResponseEntity<List<Users>> getAllUser2() {
+    	Users u=new Users();
     	u.setUserId(0);
     	BaoHiem bh=new BaoHiem();
     	bh.setMaBaoHiem(0);
     	bh.setUser(u);
     	baoHiemService.save(bh);
-        List<User> allUser = userService.getListUser();
+        List<Users> allUser = userService.getListUser();
         
         //
         BaoHiem b1=new BaoHiem();
@@ -99,14 +99,14 @@ public class Controller {
     }
 	@GetMapping("/insertdb")
     public int insertdata() {
-		User u1=new User();
+		Users u1=new Users();
 		u1.setTen("Thanh");
 		u1.setCccd("020014238654");
 		u1.setEmail("hoangthanh@gmail.com");
 		u1.setSdt("0563049675");
 		u1.setDiaChi("Phuong Hung - Gia Loc - Hai Duong");
 		
-		User u2=new User();
+		Users u2=new Users();
 		u2.setTen("Lien");
 		u2.setCccd("030202111222");
 		u2.setEmail("lienvu@gmail.com");
@@ -203,44 +203,45 @@ public class Controller {
     }
 	 //all user get
     @GetMapping
-    public ResponseEntity<List<User>> getAllUser() {
+    public ResponseEntity<List<Users>> getAllUser() {
     	System.out.println("okk");
-        List<User> allUser = userService.getListUser();
+        List<Users> allUser = userService.getListUser();
         return ResponseEntity.ok(allUser);
     }
     @GetMapping("/{mabh}")
-    public ResponseEntity<User> getUserViaMabh(@PathVariable int mabh) {
+    public ResponseEntity<Users> getUserViaMabh(@PathVariable int mabh) {
     	
         return ResponseEntity.ok(userService.getUserByMaBaoHiem(mabh));
     }
     //create
     @PostMapping
-    public ResponseEntity<User> createUser(@RequestBody User user) {
-        User user1 = userService.saveUser(user);
+    public ResponseEntity<Users> createUser(@RequestBody Users user) {
+        Users user1 = userService.saveUser(user);
         return ResponseEntity.status(HttpStatus.CREATED).body(user1);
     }
     //check login
     @GetMapping("/check_log")
-    public int check_log(@RequestBody LoginDTO login) {
-    	List<User> allUser = userService.getListUser();
-    	for(User i:allUser) {
+    public boolean check_log(@RequestBody LoginDTO login) {
+    	List<Users> allUser = userService.getListUser();
+    	for(Users i:allUser) {
     		System.out.println(i.getCccd()+"  "+i.getPassword()+"  "+login.getUsername()+ " "+login.getPassword());
-    		if(i.getCccd().equals(login.getUsername())&&i.getPassword().equals(login.getPassword())) return i.getUserId();
+    		if(i.getCccd().equals(login.getUsername())&&i.getPassword().equals(login.getPassword())) return true;
     	}
-    	return 0;
+    	return false;
     }
     //khai báo
     @PutMapping("/{userId}")
-    public ResponseEntity<User> khai_bao(@RequestBody User user) {
-    	 User user1 = userService.saveUser(user);
+    public ResponseEntity<Users> khai_bao(@RequestBody Users user) {
+    	 Users user1 = userService.saveUser(user);
          return ResponseEntity.status(HttpStatus.CREATED).body(user1);
     }
     
     @GetMapping("/tinh")
-    public ResponseEntity<HoaDon> tinh(@RequestParam int MaBaoHiem,@RequestParam String DoiTuong,@RequestParam String tinh,@RequestParam String huyen,@RequestParam String xa,@RequestParam int SoThang,@RequestParam String NoiKham,@RequestParam String LoaiBaoHiem){
+    public ResponseEntity<HoaDon> tinh(@RequestParam String MaCccd,@RequestParam String DoiTuong,@RequestParam String tinh,@RequestParam String huyen,@RequestParam String xa,@RequestParam int SoThang,@RequestParam String NoiKham,@RequestParam String LoaiBaoHiem){
     	CongTyBaoHiem cty=congTyBaoHiemService.getCongTyBaoHiemByDiaChi(tinh, huyen, xa);
+    	System.out.println(tinh+" "+huyen+" " +xa );
     	long fee=0,MucThuNhap=4500000;float heso=1;
-    	User user=userService.getUserByMaBaoHiem(MaBaoHiem);
+    	Users user=userService.getUserByCccd(MaCccd);
     	if(DoiTuong.equals("Sinh Vien")) { heso=0.7f;MucThuNhap=1500000;}
     	if(DoiTuong.equals("Ho Can Ngheo")) { heso=0.3f;MucThuNhap=1500000;}
     	if(DoiTuong.equals("Ho Ngheo")) heso=0;
@@ -255,7 +256,7 @@ public class Controller {
     	if(NoiKham.equals("Tram y te")) noiKCB=noiDangKiService.findTYT(tinh, huyen, xa);
     	else { noiKCB=noiDangKiService.findBenhVien(huyen);k=1.15;}
     	
-    	BaoHiem bh=baoHiemService.findBaoHiem(MaBaoHiem);
+    	BaoHiem bh=baoHiemService.findBaoHiem(user.getMabh());
     	 // Lấy thời gian hiện tại
         LocalDateTime now = LocalDateTime.now();
         

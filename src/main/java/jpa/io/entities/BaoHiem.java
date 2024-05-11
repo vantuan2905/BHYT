@@ -30,5 +30,5 @@ public class BaoHiem {
 	
 	 @OneToOne(cascade = CascadeType.ALL)
 	 @JoinColumn(name = "UserId")
-	 private User user;
+	 private Users user;
 }
