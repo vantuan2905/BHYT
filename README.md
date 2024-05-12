@@ -8,3 +8,6 @@
 
 - check log:
   ![image](https://github.com/vantuan2905/BHYT/assets/99082087/f486f146-7b03-4dce-8253-3d8144ab0cf7)
+- Khai bao:
+  ![image](https://github.com/vantuan2905/BHYT/assets/99082087/6e155c63-7099-411a-b4f0-3147d86e9f4d)
+
