@@ -5,6 +5,13 @@
 
 - đăng kí:
   ![image](https://github.com/vantuan2905/BHYT/assets/99082087/cf68c6b4-d8ff-4cf4-aa78-ab7766c0c3b4)
+  thông tin:
+  MaCccd: người dùng nhập
+  DoiTuong: droplist:Sinh vien/Nguoi di lam/Ho Ngheo
+  tinh,huyen,xa:
+  SoThang: droplist: 6 or 12 tháng.
+  NoiKham: Benh Vien/Tram y te.
+  LoaiBaoHiem: 1 droplist: Co Ban/Phong Mach/Bao Hiem Hiem Ngheo. 
 
 - check log:
   ![image](https://github.com/vantuan2905/BHYT/assets/99082087/f486f146-7b03-4dce-8253-3d8144ab0cf7)
